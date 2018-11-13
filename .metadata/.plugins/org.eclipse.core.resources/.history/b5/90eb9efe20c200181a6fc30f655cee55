@@ -1,0 +1,44 @@
+package com.keduo.service.systemManage;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.keduo.dao.UserDao;
+import com.keduo.entity.User;
+
+public class SelectUserService {
+
+	public ArrayList<User> selectUser(String userId, String userName, String[] status) {
+		String sql = null;
+		if (userId.equals("") && userName.equals("") && status == null) {
+			sql = "select * from user";
+		} else {
+			sql = "select * from user where";
+			if (userId.equals("")) {
+				sql = sql + " (userId like '%' or userId is null)";
+			} else {
+				sql = sql + " userId=" + userId;
+			}
+			if (userName.equals("")) {
+				sql = sql + " and (userName like '%' or userName is null)";
+			} else {
+				sql = sql + " and userName=" + "'" + userName + "'";
+			}
+			if (status == null || status.length > 1) {
+				sql = sql + " and (status like '%' or status is null)";
+			} else {
+				sql = sql + " and status=" + status[0];
+			}
+		}
+
+		try {
+			//System.out.println(sql);
+			return new UserDao().selectUser(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

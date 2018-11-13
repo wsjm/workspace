@@ -1,0 +1,311 @@
+package com.keduo.entity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+public class TaskOrder {
+	private String taskId;		//任务ID
+	private String taskname;	//任务名称
+	private String visitorOrg;	//来访单位
+	private int visitorNum;		//来访人数
+	private Date visitorDate;	//抵达时间
+	private Date leaveDate;		//离开时间
+	private int inviteOrgId;	//归属机关Id
+	private String hotel;		//入住酒店
+	private double mealsBudget;	//餐饮预算
+	private double liveBudget;	//住宿预算
+	private String others;		//其他
+	private int officeId;		//承办处室Id
+	private int directorId;		//处长Id
+	private int staffId;		//接待员Id
+	private int task_statusId;	//任务状态Id
+	private int visittypeId	;	//访问形式Id
+	private String feedbackcontext;	//反馈内容
+	private Date feedbacksubmittime;	//反馈时间
+	private int feedback_statusId;	//反馈单状态
+	private List<Bill> billList;	//实际消费清单
+	private String inviteOrg;		//存储归属机关
+	private String office;			//存储承办处室
+	private String director;		//存储处长
+	private String staff;			//存储接待员
+	private String task_status;		//存储任务状态
+	private String visittype;		//存储访问形式
+	private String feedback_status;	//存储反馈单状态
+	private String visitorDate_str;	//存储来访时间字符串
+	private String leaveDate_str;	//存储离开时间字符串
+	private String feedbacksubmittime_str;	//存储反馈时间字符串
+	
+	{	
+		Date date = new Date();
+		taskId = new SimpleDateFormat("yyyyMMddhhmmss").format(date);
+	}
+	public TaskOrder() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public TaskOrder(String taskId, String taskname, String visitorOrg, int visitorNum, Date visitorDate,
+			Date leaveDate, int inviteOrgId, String hotel, double mealsBudget, double liveBudget, String others,
+			int officeId, int directorId, int staffId, int task_statusId, int visittypeId, String feedbackcontext,
+			Date feedbacksubmittime, int feedback_statusId, List<Bill> billList) {
+		super();
+		this.taskId = taskId;
+		this.taskname = taskname;
+		this.visitorOrg = visitorOrg;
+		this.visitorNum = visitorNum;
+		this.visitorDate = visitorDate;
+		this.leaveDate = leaveDate;
+		this.inviteOrgId = inviteOrgId;
+		this.hotel = hotel;
+		this.mealsBudget = mealsBudget;
+		this.liveBudget = liveBudget;
+		this.others = others;
+		this.officeId = officeId;
+		this.directorId = directorId;
+		this.staffId = staffId;
+		this.task_statusId = task_statusId;
+		this.visittypeId = visittypeId;
+		this.feedbackcontext = feedbackcontext;
+		this.feedbacksubmittime = feedbacksubmittime;
+		this.feedback_statusId = feedback_statusId;
+		this.billList = billList;
+	}
+
+	public TaskOrder(String taskId, String taskname, String visitorOrg, int visitorNum, Date visitorDate,
+			Date leaveDate, int inviteOrgId, String hotel, double mealsBudget, double liveBudget, String others,
+			int officeId, int dircetorId, int staffId, int task_statusId, int visittypeId) {
+		super();
+		this.taskId = taskId;
+		this.taskname = taskname;
+		this.visitorOrg = visitorOrg;
+		this.visitorNum = visitorNum;
+		this.visitorDate = visitorDate;
+		this.leaveDate = leaveDate;
+		this.inviteOrgId = inviteOrgId;
+		this.hotel = hotel;
+		this.mealsBudget = mealsBudget;
+		this.liveBudget = liveBudget;
+		this.others = others;
+		this.officeId = officeId;
+		this.directorId = dircetorId;
+		this.staffId = staffId;
+		this.task_statusId = task_statusId;
+		this.visittypeId = visittypeId;
+	}
+	public String getTaskid() {
+		return taskId;
+	}
+	public void setTaskid(String taskid) {
+		this.taskId=taskid;
+	}
+	public String getTaskname() {
+		return taskname;
+	}
+	public void setTaskname(String taskname) {
+		this.taskname = taskname;
+	}
+	public String getVisitorOrg() {
+		return visitorOrg;
+	}
+	public void setVisitorOrg(String visitorOrg) {
+		this.visitorOrg = visitorOrg;
+	}
+	public int getVisitorNum() {
+		return visitorNum;
+	}
+	public void setVisitorNum(int visitorNum) {
+		this.visitorNum = visitorNum;
+	}
+	public Date getVisitorDate() {
+		return visitorDate;
+	}
+	public void setVisitorDate(Date visitorDate) {
+		this.visitorDate = visitorDate;
+	}
+	public Date getLeaveDate() {
+		return leaveDate;
+	}
+	public void setLeaveDate(Date leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+	public int getInviteOrgId() {
+		return inviteOrgId;
+	}
+	public void setInviteOrgId(int inviteOrgId) {
+		this.inviteOrgId = inviteOrgId;
+	}
+	public String getHotel() {
+		return hotel;
+	}
+	public void setHotel(String hotel) {
+		this.hotel = hotel;
+	}
+	public double getMealsBudget() {
+		return mealsBudget;
+	}
+	public void setMealsBudget(double mealsBudget) {
+		this.mealsBudget = mealsBudget;
+	}
+	public double getLiveBudget() {
+		return liveBudget;
+	}
+	public void setLiveBudget(double liveBudget) {
+		this.liveBudget = liveBudget;
+	}
+	public String getOthers() {
+		return others;
+	}
+	public void setOthers(String others) {
+		this.others = others;
+	}
+	public int getOfficeId() {
+		return officeId;
+	}
+	public void setOfficeId(int officeId) {
+		this.officeId = officeId;
+	}
+	public int getDirectorId() {
+		return directorId;
+	}
+	public void setDirectorId(int dircetorId) {
+		this.directorId = dircetorId;
+	}
+	public int getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
+	}
+	public int getTask_statusId() {
+		return task_statusId;
+	}
+	public void setTask_statusId(int task_statusId) {
+		this.task_statusId = task_statusId;
+	}
+	public int getVisittypeId() {
+		return visittypeId;
+	}
+	public void setVisittypeId(int visittypeId) {
+		this.visittypeId = visittypeId;
+	}
+	public String getFeedbackcontext() {
+		return feedbackcontext;
+	}
+	public void setFeedbackcontext(String feecbackcontext) {
+		this.feedbackcontext = feecbackcontext;
+	}
+	public Date getFeedbacksubmittime() {
+		return feedbacksubmittime;
+	}
+	public void setFeedbacksubmittime(Date feedbacksubmittime) {
+		this.feedbacksubmittime = feedbacksubmittime;
+	}
+	public int getFeedback_statusId() {
+		return feedback_statusId;
+	}
+	public void setFeedback_statusId(int feecback_statusId) {
+		this.feedback_statusId = feecback_statusId;
+	}
+	
+	public List<Bill> getBillList() {
+		return billList;
+	}
+	public void setBillList(List<Bill> billList) {
+		this.billList = billList;
+	}
+	
+	public String getInviteOrg() {
+		return inviteOrg;
+	}
+
+	public void setInviteOrg(String inviteOrg) {
+		this.inviteOrg = inviteOrg;
+	}
+
+	public String getOffice() {
+		return office;
+	}
+
+	public void setOffice(String office) {
+		this.office = office;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public String getStaff() {
+		return staff;
+	}
+
+	public void setStaff(String staff) {
+		this.staff = staff;
+	}
+
+	public String getTask_status() {
+		return task_status;
+	}
+
+	public void setTask_status(String task_status) {
+		this.task_status = task_status;
+	}
+
+	public String getVisittype() {
+		return visittype;
+	}
+
+	public void setVisittype(String visittype) {
+		this.visittype = visittype;
+	}
+
+	public String getFeedback_status() {
+		return feedback_status;
+	}
+
+	public void setFeedback_status(String feedback_status) {
+		this.feedback_status = feedback_status;
+	}
+	
+	public String getVisitorDate_str() {
+		return visitorDate_str;
+	}
+
+	public void setVisitorDate_str(String visitorDate_str) {
+		this.visitorDate_str = visitorDate_str;
+	}
+
+	public String getLeaveDate_str() {
+		return leaveDate_str;
+	}
+
+	public void setLeaveDate_str(String leaveDate_str) {
+		this.leaveDate_str = leaveDate_str;
+	}
+
+	public String getFeedbacksubmittime_str() {
+		return feedbacksubmittime_str;
+	}
+
+	public void setFeedbacksubmittime_str(String feedbacksubmittime_str) {
+		this.feedbacksubmittime_str = feedbacksubmittime_str;
+	}
+
+	@Override
+	public String toString() {
+		return "TaskOrder [taskid=" + taskId + ", taskname=" + taskname + ", visitorOrg=" + visitorOrg + ", visitorNum="
+				+ visitorNum + ", visitorDate=" + visitorDate + ", leaveDate=" + leaveDate + ", hotel=" + hotel
+				+ ", mealsBudget=" + mealsBudget + ", liveBudget=" + liveBudget + ", others=" + others
+				+ ", feedbackcontext=" + feedbackcontext + ", feedbacksubmittime=" + feedbacksubmittime + ", billList="
+				+ billList + ", inviteOrg=" + inviteOrg + ", office=" + office + ", director=" + director + ", staff="
+				+ staff + ", task_status=" + task_status + ", visittype=" + visittype + ", feedback_status="
+				+ feedback_status + "]";	
+	}
+
+	
+}	

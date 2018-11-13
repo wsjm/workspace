@@ -1,0 +1,32 @@
+package com.keduo.service.systemManage;
+
+import java.sql.SQLException;
+
+import com.keduo.dao.UserDao;
+
+public class UpdateUserService {
+
+	public void updateUser(String userName, String password, String status, int updateUserId) {
+		String sql = "update user set ";
+		if(!userName.equals("")) {
+			sql = sql + ",userName='" + userName + "'";
+		}
+		if(!password.equals("")) {
+			sql = sql + ",password='" + password + "'";
+		}
+		if(status!=null) {
+			sql = sql + ",status=" + Integer.parseInt(status);
+		}
+		sql = sql + " where userId=" + updateUserId;
+		sql = sql.replaceFirst(",", "");//去掉第一个","
+		try {
+			//System.out.println(sql);
+			new UserDao().updateuser(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}

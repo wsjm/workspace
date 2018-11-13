@@ -1,0 +1,45 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesService.DelectService;
+import com.keduo.homesService.InsertService;
+import com.keduo.homesService.SelectHomes;
+import com.keduo.homesService.UpdateService;
+
+public class DelectServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		//获取页面的信息
+		int homesId= Integer.parseInt(request.getParameter("homesId"));
+	
+		DelectService delectServlet=new DelectService();
+		delectServlet.delect(homesId);
+		
+		
+		//请求转发
+			
+			request.getRequestDispatcher("delect.jsp").forward(request, response);
+			//response.sendRedirect("homes.jsp");
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

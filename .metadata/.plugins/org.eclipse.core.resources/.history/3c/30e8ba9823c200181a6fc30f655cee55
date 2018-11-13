@@ -1,0 +1,40 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesService.InsertService;
+import com.keduo.homesService.SelectHomes;
+import com.keduo.homesService.UpdateService;
+
+public class InsertServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		
+		response.setContentType("text/html;charset=utf-8");
+		//鑾峰彇椤甸潰鐨勪俊鎭�
+		int homes_ownerId= Integer.parseInt(request.getParameter("homes_ownerId"));
+		int homesId=Integer.parseInt(request.getParameter("homesId"));
+		InsertService insertService=new InsertService();
+		insertService.insert( homes_ownerId,homesId);
+		//璇锋眰杞彂
+		request.getRequestDispatcher("zengjia.jsp").forward(request, response);
+	}
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

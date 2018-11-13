@@ -1,0 +1,54 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css">
+<script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<script>
+	$(function() {
+		$.getJSON("/getSuperMenus.do", function(data) {
+			//console.info(data);
+			var str = "";
+			$.each(data, function() {
+				//console.info(this.mainMenuName);
+				str = str + "<a href='#' onclick='showmenu("+this.mainMenuId+")'>"+this.mainMenuName+"</a>";
+			})
+			$("#north").html(str);
+		})
+		
+	});
+	function showmenu(id){
+		$.getJSON("/getChildMenus.do",{mainMenuId:id},function(data){
+			//console.info(data);
+			var str = "";
+			$.each(data,function(){
+				
+				str = str + "<h3><a href = '#'>"+this.mname+"</a></h3>"
+			})
+			$("#west").html(str);
+		})
+	} 
+	
+</script>
+</head>
+
+<body class="easyui-layout">
+	<div id="north" data-options="region:'north',title:'North Title',split:true"
+		style="height: 200px;"></div>
+	<div id="west" data-options="region:'west',title:'West',split:true"
+		style="width: 200px;"></div>
+	<div id="center" data-options="region:'center',title:'center title'"
+		style="padding: 5px; background: #eee;">
+		<div id="tt" class="easyui-tabs" style="height: 700px;"></div>
+	</div>
+</body>
+
+</html>

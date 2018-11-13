@@ -1,0 +1,65 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entity.Homes;
+import com.keduo.entity.User;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesService.SelectHomes;
+import com.keduo.service.ownerManage.LoginService;
+
+public class HomesServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		SelectHomes selectHomes=new SelectHomes();
+		ArrayList<Homes> arr=null;
+			//鑾峰彇鏁版嵁搴撲腑鐨勬暟鎹�
+			 arr=selectHomes.Select();
+			//鎶婃暟鎹簱涓殑鏁版嵁鎵撳嵃鍒伴〉闈笂鍘�
+			//鍒涘缓request鍩熷璞�
+			request.setAttribute("home", arr);
+			//璇锋眰杞彂
+			//request.setAttribute("name", "鏇规搷");
+			request.getRequestDispatcher("homes.jsp").forward(request, response);
+			//response.sendRedirect("homes.jsp");
+			String userName = request.getParameter("userName");
+			String password = request.getParameter("password");
+			User user = null;
+			if (!userName.equals("") && !password.equals("")) {//判断用户名或密码不为空
+				user = new LoginService().login(userName, password);//返回对应的登陆用户对象，为空则登陆失败
+				if ( user!= null) {
+					request.setAttribute("homes", user);//保存当前登陆用户信息到session
+					//根据不同的权限跳转不同的页面
+					switch (user.getStatus()) {
+					case 1:
+						request.getRequestDispatcher("homes.jsp").forward(request, response);
+						break;
+					case 2:
+						
+						
+					case 3:
+						request.getRequestDispatcher("/admin.jsp").forward(request, response);
+						break;
+
+					default:
+						break;
+					}
+				}
+			}
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

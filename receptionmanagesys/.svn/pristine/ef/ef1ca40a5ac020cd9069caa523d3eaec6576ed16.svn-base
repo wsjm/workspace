@@ -1,0 +1,8 @@
+package com.keduo.dao;
+
+import com.keduo.entity.TaskOrder;
+
+public interface TaskOrderDao extends BaseDao<TaskOrder>{
+	
+	
+}

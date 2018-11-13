@@ -1,0 +1,39 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entity.Homes;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesService.SelectHomes;
+
+public class HomesServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		SelectHomes selectHomes=new SelectHomes();
+		ArrayList<Homes> arr=null;
+			//鑾峰彇鏁版嵁搴撲腑鐨勬暟鎹�
+			 arr=selectHomes.Select();
+			//鎶婃暟鎹簱涓殑鏁版嵁鎵撳嵃鍒伴〉闈笂鍘�
+			//鍒涘缓request鍩熷璞�
+			request.setAttribute("home", arr);
+			//璇锋眰杞彂
+			//request.setAttribute("name", "鏇规搷");
+			request.getRequestDispatcher("homes.jsp").forward(request, response);
+			//response.sendRedirect("homes.jsp");
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

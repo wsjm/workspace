@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" type="text/css"
+	href="/js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/js/easyui/themes/icon.css">
+<script type="text/javascript" src="/js/easyui/jquery.min.js"></script>
+<script type="text/javascript" src="/js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/js/jquery-3.1.1.min.js"></script>
+<style type="text/css">
+	.a1{
+		font-size: 25px;
+		margin-right: 100px;	
+	}
+</style>
+<script>
+	$(function() {
+		$.getJSON("/getSuperMenus.do", function(data) {
+			//console.info(data);
+			var str = "";
+			$.each(data, function() {
+				//console.info(this.mainMenuName);
+				str = str + "<a class='a1' class='easyui-linkbutton' plain='true' href='#' onclick='showmenu("+this.mainMenuId+")'>"+this.mainMenuName+"</a>";
+			})
+			$("#tt1").html(str);
+		})
+		
+	});
+	function showmenu(id){
+		$.getJSON("/getChildMenus.do",{mainMenuId:id},function(data){
+			//console.info(data);
+			var str = "";
+			$.each(data,function(){
+				//console.info(this.url);
+				str = str + "<h3><a href = '#' onclick='showcontext(\""+this.url+"\")'>"+this.mname+"</a></h3>"
+				//console.info(str);
+			})
+			$("#west").html(str);
+		})
+	} 
+	function showcontext(url){
+		//alert(url);//'<iframe src="test.jsp" width="99%" height="600px"></iframe>'
+		$("#tt").html("<iframe src='"+url+"' width='99%' height='600px'></iframe>");
+	}
+	
+</script>
+</head>
+
+<body class="easyui-layout">
+	<div id="north" data-options="region:'north',split:true" style="height: 200px;">
+		<div><p><h1>公务接待任务综合管理系统</h1></p></div>
+		<div id="tt1" style="width: 60%;height: 100px;margin-top: 60px"></div>
+		
+	</div>
+	<div id="west" data-options="region:'west',title:'功能 菜单',split:true" style="width: 270px;">
+		
+	</div>
+	<div id="center" data-options="region:'center'" style="padding: 5px; background: #eee;">
+		<div id="tt" class="easyui-tabs" style="height: 500px;">
+			
+		</div>
+	</div>
+</body>
+
+</html>

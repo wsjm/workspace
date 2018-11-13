@@ -1,0 +1,35 @@
+package com.keduo.service.impl;
+
+
+import java.util.ArrayList;
+import java.sql.Date;
+
+import com.keduo.dao.TaskOrderDao;
+import com.keduo.dao.impl.TaskOrderDaoImpl;
+import com.keduo.dao.impl.TaskQueryDaoImpl;
+import com.keduo.service.TaskOrderaddService;
+
+public class TaskOrderaddServiceImpl implements TaskOrderaddService{
+
+	@Override
+	public ArrayList<Object> taskOrderAdd(String taskid, String VisitorOrg, String taskname, Date VisitorDate,
+			Date leaveDate, int inviteOrgId, String hotel, double mealsBudget, double liveBudget, String others,
+			int officeId) {
+		
+		TaskOrderDaoImpl taskOrderDaoImpl=new TaskOrderDaoImpl();
+		
+		return taskOrderDaoImpl.add(taskid, VisitorOrg, taskname, VisitorDate, leaveDate, inviteOrgId, hotel, mealsBudget, liveBudget, others, officeId);
+		
+	}
+
+	@Override
+	public ArrayList<Object> queryTaskOrderById(String taskid) {
+
+		TaskOrderDaoImpl taskOrderDaoImpl=new TaskOrderDaoImpl();
+		
+		return taskOrderDaoImpl.queryTaskOrderById(taskid);
+	}
+
+	
+
+}

@@ -1,0 +1,109 @@
+package com.keduo.controller;
+
+import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSONObject;
+import com.keduo.service.FeedbackOrderService;
+import com.keduo.service.TaskQueryService;
+
+/**
+ * 反馈单管理
+ * Servlet implementation class FeedbackOrderServlet
+ */
+public class FeedbackOrderServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	FeedbackOrderService feedbackOrderService;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public FeedbackOrderServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+	
+	private void checkFeedbackOrder(HttpServletRequest request, HttpServletResponse response) throws IOException, ParseException {
+		String taskid_str = request.getParameter("taskid");//任务单id
+		String taskname_str = request.getParameter("taskname");//任务名字
+		String feedback_statusId_str = request.getParameter("feedback_statusId");//反馈单状态
+		String visitorDate_str = request.getParameter("visitorDate");//承办时间
+		String leaveDate_str = request.getParameter("leaveDate");//承办时间
+		String page_str = request.getParameter("page");//当前页码
+		String num_str = request.getParameter("rows");//每页条数
+
+		int num = 0;
+		int page = 0;
+		String taskid = null;
+		String taskname = null;
+		int feedback_statusId = 0;
+		Date visitorDate = null;
+		Date leaveDate = null;
+		if (page_str == null || page_str.trim().length() == 0) {
+			page = 1;//如果页面没有传入page，则page=1当前第一页
+		} else {
+			page = Integer.valueOf(page_str);
+		}
+		if (num_str == null || num_str.trim().length() == 0) {
+			num = 5;//如果页面没有传入每页每数则默认每页5条记录
+		} else {
+			num = Integer.valueOf(num_str);
+		}
+		if(taskid_str == null || taskid_str.trim().length() == 0) {
+			taskid = null;
+		}else {
+			taskid = taskid_str;
+		}
+		if(taskname_str == null || taskname_str.trim().length() == 0) {
+			taskname = null;
+		}else {
+			taskname = taskname_str;
+		}
+		if(feedback_statusId_str == null || feedback_statusId_str.trim().length() == 0) {
+			feedback_statusId = -1;
+		}else {
+			feedback_statusId = Integer.valueOf(feedback_statusId_str);
+		}
+		if (visitorDate_str == null || visitorDate_str.trim().length() == 0) {
+			visitorDate = null;//如果页面没有传入date，则date=null
+		}else{
+			visitorDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(visitorDate_str).getTime());
+		}
+		if (leaveDate_str == null || leaveDate_str.trim().length() == 0) {
+			leaveDate = null;//如果页面没有传入date，则date=null
+		}else{
+			leaveDate = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(leaveDate_str).getTime());
+		}
+
+
+		Map<String,Object> map = feedbackOrderService.SelectFeedbackOrder(taskid, taskname, feedback_statusId, visitorDate, leaveDate, num, page);
+		String json = JSONObject.toJSONString(map);
+		//System.out.println(json);
+		response.getWriter().println(json);
+		
+	}
+
+}

@@ -1,0 +1,46 @@
+package com.keduo.controller.systemManage;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entity.User;
+import com.keduo.service.systemManage.UpdateUserService;
+
+public class UpdateUserServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
+		String userName = req.getParameter("userName");
+		//System.out.println(userName + "---");
+		String password = req.getParameter("password");
+		//System.out.println(password + "---");
+		String status = req.getParameter("status");
+		//System.out.println(status + "---");
+		int updateUserId = Integer.parseInt(req.getParameter("updateUserId"));
+		//System.out.println(updateUserId);
+		if(userName==null&&password==null&&status==null) {
+			ArrayList<User> userList = new ArrayList<User>();		
+			String updateUserName = req.getParameter("updateUserName");
+			String updatePassword = req.getParameter("updatePassword");
+			int updateStatus = Integer.parseInt(req.getParameter("updateStatus"));
+			userList.add(new User(updateUserId, updateUserName, updatePassword, updateStatus));
+			req.setAttribute("userList", userList);//没有修改任何东西，直接请求转发回页面
+			req.setAttribute("updateUserId", updateUserId);
+			req.getRequestDispatcher("systemManagement.jsp").forward(req, resp);
+		}else {
+			new UpdateUserService().updateUser(userName,password,status,updateUserId);
+			resp.sendRedirect("systemManagement.jsp");
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+
+}

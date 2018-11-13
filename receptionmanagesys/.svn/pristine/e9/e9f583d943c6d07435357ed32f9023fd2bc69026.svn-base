@@ -1,0 +1,24 @@
+package receptionmanagesys;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import com.alibaba.fastjson.JSONObject;
+import com.keduo.dao.impl.TaskStatisDaoImpl;
+import com.keduo.service.impl.TaskQueryServiceImpl;
+
+public class Test01 {
+	public static void main(String[] args) throws ParseException {
+		//new TaskQueryServiceImpl().queryInviteOrg(null, -1, -1, 1, 1);
+		//Date date = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("2018-10-28").getTime());
+		//String json = JSONObject.toJSONString(new TaskQueryServiceImpl().queryInviteOrg(date, 12, 2, 2, 1));
+		//System.out.println(json);
+		//new TaskQueryServiceImpl().queryDept(-1, -1, null, 4, 1, 1);
+		//new TaskQueryServiceImpl().queryBill(null, 12, 1, 1);
+		//new TaskQueryServiceImpl().queryOverspendTask(2018, 10, 1, 1);
+//		new TaskQueryServiceImpl().queryExceedBillTypeTask(2018, 10, 5, 1);
+		new TaskStatisDaoImpl().queryAgencyCost(2018, 10, 5, 1);
+		
+	}
+}

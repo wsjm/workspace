@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\江明\Desktop\userwork_easyui(menu表格数据和分页)_代码"/>
+		<item value="C:\Users\江明\Desktop\userwork"/>
+		<item value="C:\Users\江明\Desktop\jqueryajax"/>
+		<item value="C:\Users\江明\Desktop\fanshedao"/>
+		<item value="C:\Users\江明\Desktop\propertyManagementSystem5"/>
+		<item value="C:\Users\江明\Desktop\1\propertyManagementSystem5"/>
+		<item value="C:\Users\江明\Desktop\新建文件夹\propertyManagementSystem"/>
+		<item value="C:\Users\江明\Desktop\新建文件夹\propertyManagementSystem5"/>
+		<item value="C:\Users\江明\Desktop\4"/>
+		<item value="C:\Users\江明\Desktop\新建文件夹\propertyManagementSystem2"/>
+		<item value="C:\Users\江明\Desktop\3"/>
+		<item value="C:\Users\江明\Desktop\propertyManagementSystem3"/>
+		<item value="C:\Users\江明\Desktop\propertyManagementSystem2"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+	</section>
+	<section name="NewWizardAction">
+		<item value="org.eclipse.m2e.core.wizards.Maven2ProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.m2e"/>
+		</list>
+	</section>
+</section>

@@ -1,0 +1,8 @@
+package com.keduo.dao;
+
+import java.util.List;
+
+public interface GetShowDao {
+	List getInviteOrg();
+	List getVisittypeId();
+}

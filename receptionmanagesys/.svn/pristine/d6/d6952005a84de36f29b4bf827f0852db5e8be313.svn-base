@@ -1,0 +1,84 @@
+package com.keduo.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSONObject;
+import com.keduo.service.impl.TaskOrderaddServiceImpl;
+
+/**
+ * 任务单管理
+ * Servlet implementation class TaskOrderServlet
+ */
+public class TaskOrderServlet extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		TaskOrderaddServiceImpl taskOrderaddServiceImpl= new TaskOrderaddServiceImpl();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String taskid= request.getParameter("taskid");
+		String VisitorOrg= request.getParameter("VisitorOrg");
+		String taskname= request.getParameter("taskname");
+		String VisitorDate1= request.getParameter("VisitorDate");
+		
+		 String leaveDate1= request.getParameter("leavaDate");
+		 System.out.println(VisitorDate1);
+	try {	
+			Date VisitorDate = (Date) sdf.parse(VisitorDate1);
+			
+			 Date leaveDate;
+			
+				leaveDate = (Date) sdf.parse(leaveDate1);
+				String inviteOrgId1= request.getParameter("inviteOrgId");
+				int inviteOrgId = Integer.parseInt(inviteOrgId1);
+				
+				String hotel= request.getParameter("hotel");
+				String mealsBudget1= request.getParameter("mealsBudget");
+				Double mealsBudget= Double.parseDouble(mealsBudget1);
+				String liveBudget1= request.getParameter("liveBudget");
+				Double liveBudget= Double.parseDouble(liveBudget1);
+				String others= request.getParameter("others");
+				String officeId1= request.getParameter("officeId");
+				int officeId= Integer.parseInt(officeId1);
+				String director= request.getParameter("director");
+				String staff= request.getParameter("staff");
+				ArrayList<Object> arr= taskOrderaddServiceImpl.taskOrderAdd(taskid, VisitorOrg, taskname, VisitorDate, leaveDate, inviteOrgId, hotel, mealsBudget, liveBudget, others, officeId);
+				for (Object object2 : arr) {
+					
+					String string= JSONObject.toJSONString(object2);
+					PrintWriter printWriter=new PrintWriter(string);
+					printWriter.write(string);
+					System.out.println(object2);
+				}
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 
+			
+	
+	ArrayList<Object> arrayList=  taskOrderaddServiceImpl.queryTaskOrderById(taskid);
+			for (Object object : arrayList) {
+				String string= JSONObject.toJSONString(object);
+				PrintWriter printWriter=new PrintWriter(string);
+				printWriter.write(string);
+				System.out.println(object);
+			}
+		
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

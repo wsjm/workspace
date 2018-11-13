@@ -1,0 +1,55 @@
+package com.keduo.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.alibaba.fastjson.JSONObject;
+
+/**
+ * Servlet implementation class UserServlet
+ */
+public class UserServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public UserServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String path = request.getServletPath();
+		if (path.trim().equals("/changePassword")) {
+			String oldPassword = request.getParameter("oldPassword");
+			String newPassword1 = request.getParameter("newPassword1");
+			String newPassword2 = request.getParameter("newPassword2");
+			System.out.println(oldPassword + "-" + newPassword1 + "=" + newPassword2);
+			String msg = null;
+			boolean flag = false;
+			if(!newPassword1.equals(newPassword2)) {
+				flag=false;
+				
+			}
+			return;
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
+
+}

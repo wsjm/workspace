@@ -1,0 +1,48 @@
+package com.keduo.service.impl;
+
+
+import java.util.ArrayList;
+import java.sql.Date;
+
+import com.keduo.dao.TaskOrderDao;
+import com.keduo.dao.impl.TaskOrderDaoImpl;
+import com.keduo.dao.impl.TaskQueryDaoImpl;
+import com.keduo.service.TaskOrderaddService;
+
+public class TaskOrderaddServiceImpl implements TaskOrderaddService{
+
+	@Override
+	public ArrayList<Object> taskOrderAdd(String taskid, String VisitorOrg, String taskname, Date VisitorDate,
+			Date leaveDate, int inviteOrgId, String hotel, double mealsBudget, double liveBudget, String others,
+			int officeId,int directorId,int staffId,int task_statusId,int visittypeId) {
+		
+		TaskOrderDaoImpl taskOrderDaoImpl=new TaskOrderDaoImpl();
+		
+		return taskOrderDaoImpl.add(taskid, VisitorOrg, taskname, VisitorDate, leaveDate, inviteOrgId, hotel, mealsBudget, liveBudget, others, officeId,directorId, staffId, task_statusId, visittypeId);
+		
+	}
+
+	@Override
+	public ArrayList<Object> queryTaskOrderById(String taskid) {
+
+		TaskOrderDaoImpl taskOrderDaoImpl=new TaskOrderDaoImpl();
+		
+		return taskOrderDaoImpl.queryTaskOrderById(taskid);
+	}
+
+	//根据任务单id删除
+		@Override
+		public boolean deleteTaskOrderById(String taskid, int task_statusId) {
+			TaskOrderDaoImpl taskOrderDaoImpl=new TaskOrderDaoImpl();
+			return taskOrderDaoImpl.deleteTaskOrderById(taskid, task_statusId);
+		}
+
+	@Override
+	public int TaskOrder(int task_statusId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+
+}

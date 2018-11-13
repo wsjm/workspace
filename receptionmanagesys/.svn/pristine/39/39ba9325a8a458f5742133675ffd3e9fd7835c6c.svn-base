@@ -1,0 +1,14 @@
+package com.keduo.service;
+
+
+import java.util.ArrayList;
+import java.sql.Date;
+
+public interface TaskOrderaddService {
+
+	public ArrayList<Object> taskOrderAdd(String taskid, String VisitorOrg,String taskname,Date VisitorDate,Date leaveDate,int inviteOrgId,String hotel,double mealsBudget,double liveBudget,
+			String others,int officeId);
+public ArrayList<Object> queryTaskOrderById(String taskid);
+
+
+}

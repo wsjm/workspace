@@ -1,0 +1,41 @@
+
+package com.keduo.homesDao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.util.DbUtil;
+
+
+public  class InsertDao {
+	static int i;
+	static ResultSet rs;
+	public  Homes  inserthomes( int homes_ownerId,int  homesId) throws SQLException{
+		Connection con=DbUtil.getConnection();
+		Homes homes=new Homes();
+		//创建连接对象
+		PreparedStatement ps= con.prepareStatement("update homes set homes_ownerId=? where homesId=?");
+		//占位符的处理
+		
+		ps.setInt(1, homes_ownerId);
+		ps.setInt(2, homesId);
+		//获取结果集
+		  ps.executeUpdate();
+		//关闭资源
+		
+		  
+		con.close();
+		
+
+		
+return homes;
+	}
+
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="0" key="CommitDialog.location.y"/>
+	<item value="366" key="CommitDialog.location.x"/>
+	<item value="229" key="HistoryTableProvider.SVNHistoryPage.作者"/>
+	<item value="500" key="CommitDialog.weights.0"/>
+	<item value="197" key="MarkResolvedDialog.location.y"/>
+	<item value="100" key="HistoryTableProvider.SVNHistoryPage.注释"/>
+	<item value="525" key="RevertDialog.location.x"/>
+	<item value="500" key="CommitDialog.weights.1"/>
+	<item value="654" key="MarkResolvedDialog.location.x"/>
+	<item value="613" key="MarkResolvedDialog.size.x"/>
+	<item value="478" key="MarkResolvedDialog.size.y"/>
+	<item value="0" key="RevertDialog.location.y"/>
+	<item value="975" key="CommitDialog.size.y"/>
+	<item value="1370" key="CommitDialog.size.x"/>
+	<item value="1030" key="RevertDialog.size.y"/>
+	<item value="311" key="HistoryTableProvider.SVNHistoryPage.日期"/>
+	<item value="870" key="RevertDialog.size.x"/>
+	<item value="https://desktop-ionuv22:8443/svn/dao/trunk" key="RepositorySelectionPage.lastRepository"/>
+	<item value="" key="DirectorySelectionPage.lastParent_https://desktop-ionuv22:8443/svn/dao/trunk"/>
+	<item value="128" key="HistoryTableProvider.SVNHistoryPage.修订"/>
+	<section name="CommitWizard">
+		<item value="500" key="VWeight2"/>
+		<item value="500" key="VWeight1"/>
+		<item value="false" key="ShowCompare"/>
+	</section>
+	<section name="NewLocationWizard">
+		<list key="ConfigurationWizardMainPage.STORE_URL_ID">
+			<item value="http://svnchina.com/svn2/receptionmanagesys"/>
+			<item value="https://DESKTOP-IONUV22:8443/svn/dao/trunk"/>
+			<item value="https://192.168.4.225/svn/dao/trunk"/>
+		</list>
+	</section>
+</section>

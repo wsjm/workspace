@@ -1,0 +1,49 @@
+<%@page import="com.keduo.entiry.Homes"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.keduo.service.SelectHomes"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<%
+	SelectHomes selectHomes=new SelectHomes();
+	//获取数据库中的数据
+	 ArrayList<Homes> arr=selectHomes.Select();
+	//把数据库中的数据打印到页面上去
+	//创建request域对象
+	request.setAttribute("home", arr);
+	//request.setAttribute("name", "曹操");
+		//ArrayList homes = (ArrayList) request.getAttribute("home");
+		//String name=(String) request.getAttribute("name");
+	%>
+
+
+
+	<table border="1px">
+		<tr>
+		<th>homesId</th>
+		<th>homes_address</th>
+		<th>homes_type</th>
+		<th>homes_area</th>
+		<th>homes_ownerId</th>
+		</tr>
+<c:forEach items="${home}" var="home">
+	<tr>
+	<td><c:out value="${home.getHomesId()}"/></td>
+	<td><c:out value="${home.homes_address }"/></td>
+	<td><c:out value="${home.homes_type }"/></td>
+	<td><c:out value="${home.homes_area }"/></td>
+	<td><c:out value="${home.homes_ownerId }"/></td>
+	</tr>
+
+</c:forEach>
+
+	</table>
+</body>
+</html>

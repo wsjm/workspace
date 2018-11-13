@@ -1,0 +1,11 @@
+package com.keduo.service;
+
+import java.util.List;
+
+/*
+ * 获取各种页面显示内容
+ */
+public interface GetShowService {
+	List getInviteOrg();
+	List getVisittypeId();
+}

@@ -1,0 +1,26 @@
+package com.keduo.service.impl;
+
+import java.util.List;
+
+import com.keduo.dao.GetShowDao;
+import com.keduo.dao.impl.GetShowDaoImpl;
+import com.keduo.service.GetShowService;
+
+public class GetShowServiceImpl implements GetShowService{
+	GetShowDao dao;
+	public GetShowServiceImpl() {
+		dao = new GetShowDaoImpl();
+	}
+	@Override
+	public List getInviteOrg() {
+		
+		return dao.getInviteOrg();
+	}
+
+	@Override
+	public List getVisittypeId() {
+		// TODO Auto-generated method stub
+		return dao.getVisittypeId();
+	}
+	
+}

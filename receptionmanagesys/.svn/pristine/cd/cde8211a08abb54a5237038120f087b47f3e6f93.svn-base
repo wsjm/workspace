@@ -1,0 +1,18 @@
+package com.keduo.service;
+
+
+import java.util.ArrayList;
+import java.sql.Date;
+
+public interface TaskOrderaddService {
+
+	public ArrayList<Object> taskOrderAdd(String taskid, String VisitorOrg,String taskname,Date VisitorDate,Date leaveDate,int inviteOrgId,String hotel,double mealsBudget,double liveBudget,
+			String others,int officeId,int directorId,int staffId,int task_statusId,int visittypeId);
+	public ArrayList<Object> queryTaskOrderById(String taskid);
+
+		//删除任务单
+	public	boolean deleteTaskOrderById(String taskid,int task_statusId);
+		//是否审查0：未审查1：审查
+		public int TaskOrder(int task_statusId);
+		//来宾访问
+}

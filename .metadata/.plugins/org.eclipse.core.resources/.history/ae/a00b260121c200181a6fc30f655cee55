@@ -1,0 +1,31 @@
+package com.keduo.controller.systemManage;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.service.systemManage.AddUserService;
+
+public class AddUserServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String userName = req.getParameter("userName");
+		String password = req.getParameter("password");
+		String status = req.getParameter("status");	
+		String result = new AddUserService().addUser(userName,password,status);
+		resp.getWriter().write(result+",5秒后返回");
+		resp.setHeader("refresh", "5;url=systemManagement.jsp");
+		resp.getWriter().write("<a href=\"systemManagement.jsp\">立即跳转</a>");
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+
+}

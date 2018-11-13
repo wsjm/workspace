@@ -1,0 +1,159 @@
+package com.keduo.dao.impl;
+import java.sql.Date;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.keduo.dao.TaskOrderDao;
+import com.keduo.entity.TaskOrder;
+import com.keduo.util.DBUtil;
+
+public class TaskOrderDaoImpl extends BaseDaoImpl<TaskOrder> implements TaskOrderDao{
+	DBUtil dbUtil=new DBUtil();
+	@Override
+	public ArrayList<Object> add( String taskid, String VisitorOrg, String taskname, Date VisitorDate, Date leaveDate,
+			int inviteOrgId, String hotel, double mealsBudget, double liveBudget, String others, int officeId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con=dbUtil.getconnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String sql1="SET GLOBAL FOREIGN_KEY_CHECKS = 0;";
+		String sql="insert into taskorder(taskid,VisitorOrg,taskname,VisitorDate,leaveDate,inviteOrgId,hotel,mealsBudget,liveBudget,others,officeId) values(?,?,?,?,?,?,?,?,?,?,?) ";
+		
+		try {
+			//获取数据库连接
+			ArrayList arrayList=new ArrayList();
+		
+			 pstm =con.prepareStatement(sql1);
+			 pstm=con.prepareStatement(sql);
+			 
+			 pstm.setString(1,taskid);
+			 pstm.setString(2, VisitorOrg);
+			 pstm.setString(3, taskname);
+			pstm.setDate(4,VisitorDate );
+			pstm.setDate(5,leaveDate );
+			 pstm.setInt(6, inviteOrgId);
+			 pstm.setString(7, hotel);
+			 pstm.setDouble(8, mealsBudget);
+			 pstm.setDouble(9, liveBudget);
+			 pstm.setString(10, others);
+			 pstm.setInt(11, officeId);
+			// pstm.setString(12, director);
+			// pstm.setString(12, staff);
+			/* 
+			 pstm.setInt(14, (page - 1) * num);
+			 pstm.setInt(15, num);*/
+			 
+			 
+			 System.out.println(sql);
+			pstm.executeUpdate();
+			/*arrayList.add(pstm);
+			 return arrayList;*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	//根据任务的ID查询
+	@Override
+	public ArrayList<Object> queryTaskOrderById(String taskid) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		DBUtil dbUtil=new DBUtil();
+		try {
+			con=dbUtil.getconnection();
+			String sql="select * from taskorder";
+			 pstm =con.prepareStatement(sql);
+			 rs= pstm.executeQuery();
+			 ArrayList arrayList=new ArrayList();
+			while (rs.next()) {
+				TaskOrder taskOrder=new TaskOrder();
+				taskOrder.setTaskid(rs.getString("taskid"));
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setTaskname(rs.getString("taskname"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				//taskOrder.setLeaveDate(rs.getDate("leavaDate"));
+				//taskOrder.setLeaveDate(rs.getDate("leavaDate"));
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setMealsBudget(rs.getDouble("mealsBudget"));
+				taskOrder.setLiveBudget(rs.getDouble("liveBudget"));
+				taskOrder.setOthers(rs.getString("others"));
+				taskOrder.setOfficeId(rs.getInt("officeId"));
+				//taskOrder.setDirector(rs.getString("director"));
+				//taskOrder.setStaff(rs.getString("staff"));
+				
+				arrayList.add(taskOrder);
+			}
+			return arrayList;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			// 关闭释放资源
+			 try {
+				dbUtil.closeResource(con, pstm,rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		return null;
+	}
+	
+	
+
+	
+	@Override
+	public int TaskOrder(int task_statusId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	//状态为草稿可以删除
+	@Override
+	public ArrayList<Object> deleteTaskOrderById(String taskid, int task_statusId) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		DBUtil dbUtil=new DBUtil();
+		try {
+			con=dbUtil.getconnection();
+			String sql="delete * from taskorder where taskid=?";
+			//task_statusId 1为草稿  2为未审核  3驳回   4   已审核  5办结
+			
+			 pstm =con.prepareStatement(sql);
+			 rs= pstm.executeQuery();
+			 ArrayList arrayList=new ArrayList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+	
+	
+}

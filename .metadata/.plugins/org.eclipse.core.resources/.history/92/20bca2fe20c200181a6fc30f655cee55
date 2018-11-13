@@ -1,0 +1,19 @@
+package com.keduo.service.systemManage;
+
+import java.sql.SQLException;
+
+import com.keduo.dao.UserDao;
+
+public class DeleteUserService {
+
+	public void deleteUser(String userId) {
+		try {
+			new UserDao().deleteUserById(userId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+}

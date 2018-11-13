@@ -1,0 +1,36 @@
+package com.keduo.controller.systemManage;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entity.User;
+import com.keduo.service.systemManage.SelectUserService;
+
+
+
+
+public class SelectUserServlet extends HttpServlet{
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String userId = req.getParameter("userId");
+		String userName = req.getParameter("userName");
+		String[] status = req.getParameterValues("status");
+		//System.out.println(userId+"--"+userName+"--"+status);
+		ArrayList<User> userList = new ArrayList<User>();
+		userList = new SelectUserService().selectUser(userId,userName,status);
+		req.setAttribute("userList", userList);
+		req.getRequestDispatcher("systemManagement.jsp").forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
+	}
+
+}

@@ -1,0 +1,36 @@
+package com.keduo.service.systemManage;
+
+import java.sql.SQLException;
+
+import com.keduo.dao.UserDao;
+import com.keduo.entity.User;
+
+public class AddUserService {
+
+	public String addUser(String userName, String password, String status) {
+		UserDao userDao = new UserDao();
+		//验证用户名是否已存在
+		try {
+			User user = userDao.findUserByUserName(userName);
+			if(user!=null) {
+				return "用户名已存在";
+			}
+			//检验密码是否为6位数字
+			if(!password.matches("[0-9]{6}")) {
+				return "密码不符合规范，请使用6位数字组合";
+			}
+			String sql = "insert into user(userName,password,status) values('"+userName+"','"+password+"',"+status+")";
+			//System.out.println(sql);
+			userDao.addUser(sql);
+			return "添加成功";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "未知错误";
+		
+		
+	}
+	
+}

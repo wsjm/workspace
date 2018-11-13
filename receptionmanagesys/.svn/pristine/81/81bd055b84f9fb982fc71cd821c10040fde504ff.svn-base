@@ -1,0 +1,22 @@
+package receptionmanagesys;
+
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import com.keduo.dao.impl.FeedbackOrderDaoImpl;
+import com.keduo.entity.Bill;
+
+public class Test02 {
+	public static void main(String[] args) throws ParseException {
+		FeedbackOrderDaoImpl fbod = new FeedbackOrderDaoImpl();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		fbod.SelectFeedbackOrder(null, 0, 0, 0, new Date(sdf.parse("2018-10-01").getTime()), new Date(sdf.parse("2018-10-10").getTime()), 5, 1);
+		fbod.SelectFeedbackOrder(null, "来当地考查", 0, null, null, 5, 1);
+		fbod.SelectFeedbackOrder("20181021124103", null, 0, 0, null, null, 5, 1);
+		
+		Bill bill = new Bill(0, "其他费", 200.5, new Date(sdf.parse("2018-10-01").getTime()), 0, null);
+		fbod.insertFee(bill);
+		
+	}
+}

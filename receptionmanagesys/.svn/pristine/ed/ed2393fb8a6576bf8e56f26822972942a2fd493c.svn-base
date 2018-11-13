@@ -1,0 +1,65 @@
+package com.keduo.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.keduo.dao.GetShowDao;
+import com.keduo.util.DBUtil;
+
+public class GetShowDaoImpl implements GetShowDao {
+
+	@Override
+	public List getInviteOrg() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List list = new ArrayList();
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement("SELECT deptid,deptname FROM dept WHERE superdeptId=1");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				Map org = new HashMap();
+				org.put("deptid", rs.getInt("deptid"));
+				org.put("deptname", rs.getString("deptname"));
+				list.add(org);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List getVisittypeId() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List list = new ArrayList();
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement("SELECT * FROM visittype");
+			rs = pstm.executeQuery();
+			while(rs.next()) {
+				Map org = new HashMap();
+				org.put("visitTypeId", rs.getInt("visitTypeId"));
+				org.put("visitTypeName", rs.getString("visitTypeName"));
+				list.add(org);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+}

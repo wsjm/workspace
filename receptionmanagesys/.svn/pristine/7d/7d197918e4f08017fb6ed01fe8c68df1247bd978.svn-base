@@ -1,0 +1,24 @@
+package com.keduo.dao;
+
+
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.Map;
+
+import com.keduo.entity.TaskOrder;
+import com.mysql.fabric.xmlrpc.base.Data;
+
+public interface TaskOrderDao extends BaseDao<TaskOrder>{
+	//添加任务单
+	ArrayList<Object> add(String taskid, String VisitorOrg,String taskname,Date VisitorDate,Date leaveDate,int inviteOrgId,String hotel,double mealsBudget,double liveBudget,
+			String others,int officeId);
+	//查询任务单
+	ArrayList<Object> queryTaskOrderById(String taskid);
+	//删除任务单
+	ArrayList<Object> deleteTaskOrderById(String taskid,int task_statusId);
+	//是否审查0：未审查1：审查
+	int TaskOrder(int task_statusId);
+	//来宾访问
+	
+	
+}

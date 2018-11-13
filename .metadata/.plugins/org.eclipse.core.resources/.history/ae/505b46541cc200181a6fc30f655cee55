@@ -1,0 +1,31 @@
+package com.keduo.homesService;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.keduo.controller.homesServlet.LoginServlet;
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.homesDao.DelectDao;
+import com.keduo.homesDao.InsertDao;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesDao.Selecthomes;
+import com.keduo.homesDao.UpdateHomesOwnerId;
+
+public class DelectService {
+	public  Homes delect(  int homesId){
+		Homes homes=new Homes();
+		DelectDao delectDao=new DelectDao();
+		try {
+			homes=	delectDao.updatehomes(homesId);
+					
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return homes;
+
+	}
+
+}

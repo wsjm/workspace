@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+   <product>
+      <name>铅笔</name>
+      <descri>我是铅笔</descri>
+      <price>1</price>
+   </product>
+   <product>
+      <name>钢笔</name>
+      <descri>我是钢笔</descri>
+      <price>200</price>
+   </product>
+   <product>
+      <name>圆珠笔</name>
+      <descri>我是圆珠笔</descri>
+      <price>2</price>
+   </product>
+</products>

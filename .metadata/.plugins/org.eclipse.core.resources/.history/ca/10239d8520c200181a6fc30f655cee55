@@ -1,0 +1,164 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="ownerManagement.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.div1 {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	font-family: '微软雅黑';
+	font-size: 25px;
+}
+
+.div2 {
+	width: 100%;
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	font-family: '微软雅黑';
+	font-size: 25px;
+}
+
+.div1 input {
+	height: 25px;
+	font-size: 25px;
+}
+
+.div2 input {
+	height: 25px;
+	font-size: 25px;
+}
+
+table {
+	margin: auto;
+	width: 80%;
+	margin-top: 50px;
+	font-size: 20px;
+}
+
+th {
+	width: 13%;
+}
+
+td {
+	text-align: center;
+}
+</style>
+</head>
+
+<body style="margin: 0;">
+	<div class="div1">
+		<p>请填写查询条件</p>
+		<form action="selectOwnerServlet">
+			业主id<input type="text" name="ownerId" /> 业主姓名 <input type="text"
+				name="ownerName" /> 业主手机 <input type="text" name="ownerPhone" /> <input
+				type="submit" value="提交查询" style="height: 35px; font-size: 20px;" />
+			<input type="hidden" name="page" value="updateOwner" />
+		</form>
+	</div>
+	<div>
+		<table rules="all" frame="border">
+			<tr>
+				<th>业主id</th>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>年龄</th>
+				<th>电话</th>
+				<th>手机</th>
+				<th>通讯地址</th>
+			</tr>
+			<c:forEach items="${requestScope.ownerList}" var="own">
+				<tr>
+					<td><c:choose>
+							<c:when test="${own.ownerId==0 }">
+					null
+					</c:when>
+							<c:otherwise>
+					${own.ownerId }
+					</c:otherwise>
+						</c:choose></td>
+					<td>${own.ownerName }</td>
+					<td>${own.ownerSex }</td>
+					<td>${own.ownerAge }</td>
+					<td>${own.ownerTel }</td>
+					<td>${own.ownerPhone }</td>
+					<td>${own.ownerAddr }</td>
+					<td><a
+						href="deleteOwnerServlet?deleteOwnerId=${own.ownerId}&deleteOwnerName=${own.ownerName}&deleteOwnerSex=${own.ownerSex}
+								&deleteOwnerAge=${own.ownerAge }&deleteOwnerTel=${own.ownerTel }&deleteOwnerPhone=${own.ownerPhone }&deleteOwnerAddr=${own.ownerAddr }"
+						onclick="return dd();">删除</a></td>
+					<td><a
+						href="updateOwnerServlet?updateOwnerId=${own.ownerId}&updateOwnerName=${own.ownerName}&updateOwnerSex=${own.ownerSex}
+								&updateOwnerAge=${own.ownerAge }&updateOwnerTel=${own.ownerTel }&updateOwnerPhone=${own.ownerPhone }&updateOwnerAddr=${own.ownerAddr }">修改</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<c:if
+		test="${not empty requestScope.updateOwnerId || not empty requestScope.updateOwnerName || not empty requestScope.updateOwnerSex || not empty requestScope.updateOwnerAge || not empty requestScope.updateOwnerTel || not empty requestScope.updateOwnerPhone || not empty requestScope.updateOwnerAddr}">
+		<div class="div2">
+			<table rules="all" frame="border">
+				<tr>
+					<td style="width: 13%"><c:choose>
+							<c:when test="${requestScope.updateOwnerId==0 }">
+					null
+					</c:when>
+							<c:otherwise>
+					${requestScope.updateOwnerId }
+					</c:otherwise>
+						</c:choose></td>
+					<td style="width: 13%">${requestScope.updateOwnerName }</td>
+					<td style="width: 13%">${requestScope.updateOwnerSex }</td>
+					<td style="width: 13%">${requestScope.updateOwnerAge }</td>
+					<td style="width: 13%">${requestScope.updateOwnerTel }</td>
+					<td style="width: 13%">${requestScope.updateOwnerPhone }</td>
+					<td style="width: 13%">${requestScope.updateOwnerAddr }</td>
+				</tr>
+			</table>
+			<p>请填写需要修改的信息</p>
+			<form action="updateOwnerServlet">
+				姓&emsp;&emsp;名：<input type="text" name="ownerName" placeholder="姓名">
+				性&emsp;&emsp;别：<input type="radio" name="ownerSex" value="男"
+					style="width: 120px">男 <input type="radio" name="ownerSex"
+					value="女" style="width: 120px">女<br />
+				<br /> 年&emsp;&emsp;龄：<input type="text" name="ownerAge"
+					placeholder="年龄"> 电&emsp;&emsp;话：<input type="text"
+					name="ownerTel" placeholder="电话"><br />
+				<br /> 手&emsp;&emsp;机：<input type="text" name="ownerPhone"
+					placeholder="手机"> 通讯地址：<input type="text" name="ownerAddr"
+					placeholder="通讯地址"><br />
+				<br /> <input type="hidden" name="updateOwnerId"
+					value="${requestScope.updateOwnerId}" /> <input type="hidden"
+					name="updateOwnerName" value="${requestScope.updateOwnerName}" /> <input
+					type="hidden" name="updateOwnerSex"
+					value="${requestScope.updateOwnerSex}" /> <input type="hidden"
+					name="updateOwnerAge" value="${requestScope.updateOwnerAge}" /> <input
+					type="hidden" name="updateOwnerTel"
+					value="${requestScope.updateOwnerTel}" /> <input type="hidden"
+					name="updateOwnerPhone" value="${requestScope.updateOwnerPhone}" />
+				<input type="hidden" name="updateOwnerAddr"
+					value="${requestScope.updateOwnerAddr}" /> <input type="submit"
+					value="提交修改" style="height: 35px; font-size: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="reset" value="重置"
+					style="height: 35px; font-size: 20px;">
+
+			</form>
+		</div>
+	</c:if>
+	<script language="jscript">
+		
+			function dd() {
+				if(confirm("请确认是否删除！")) return true;
+				return false;
+			}
+		
+	</script>
+</body>
+
+</html>

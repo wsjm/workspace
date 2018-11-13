@@ -1,0 +1,27 @@
+package com.keduo.homesService;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.keduo.controller.homesServlet.LoginServlet;
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesDao.Selecthomes;
+
+public class SelectHomes {
+	public  ArrayList<Homes> Select(){
+		ArrayList<Homes> homesList=null;
+		Selecthomes selectHomes=new Selecthomes();
+		try {
+			homesList =	selectHomes.selecthomes();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return homesList;
+
+	}
+
+}

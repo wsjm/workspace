@@ -1,0 +1,40 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.homesDao.LoginDao;
+import com.keduo.homesService.SelectHomes;
+
+public class HomesServlet extends HttpServlet {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		SelectHomes selectHomes=new SelectHomes();
+		ArrayList<Homes> arr=null;
+			//获取数据库中的数据
+			 arr=selectHomes.Select();
+			//把数据库中的数据打印到页面上去
+			//创建request域对象
+			request.setAttribute("home", arr);
+			//请求转发
+			//request.setAttribute("name", "曹操");
+			request.getRequestDispatcher("homes.jsp").forward(request, response);
+			//response.sendRedirect("homes.jsp");
+	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

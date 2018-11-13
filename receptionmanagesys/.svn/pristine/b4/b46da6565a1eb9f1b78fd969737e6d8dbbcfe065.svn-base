@@ -1,0 +1,415 @@
+package com.keduo.dao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.keduo.dao.TaskStaticsDao;
+import com.keduo.entity.TaskOrder;
+import com.keduo.util.DBUtil;
+
+public class TaskStatisDaoImpl implements TaskStaticsDao {
+
+	@Override
+	public Map<String, Object> queryOfficeReception(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+		sql1.append(
+				"SELECT taskid,VisitorOrg,VisitorNum,VisitorDate,leaveDate,inviteOrgId,hotel,mealsBudget,livebudget,officeId,staffId FROM taskorder t ,bill b,dept d WHERE  t.taskid = b.feedbackorder and t.invitedOrgId = d.deptid and t.officeid = d.deptid and DATE_FORMAT(t.leaveDate,'%Y%m') =");
+		sql1.append(date);
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			int count = 0;
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setTaskid(rs.getString("taskid"));
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setVisitorNum(rs.getInt("VisitorNum"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setLeaveDate(rs.getDate("leaveDate"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setMealsBudget(rs.getDouble("mealsBudget"));
+				taskOrder.setLiveBudget(rs.getDouble("livebudget"));
+				taskOrder.setOfficeId(rs.getInt("officeId"));
+				taskOrder.setStaff(rs.getString("staffId"));
+				taskmap.put("taskOrder", taskOrder);
+				count++;
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("count", count);//具体批次
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> queryMonthGuestTaskList(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+	
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar c = Calendar.getInstance();
+			String dt = null ;
+			Date d;
+			d = sdf.parse(dt);
+			c.setTime(d);
+			int year1 = c.get(Calendar.YEAR);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		sql1.append(
+				"SELECT taskid,VisitorOrg,VisitorNum,VisitorDate,leaveDate,visittypeId,inviteOrgId,hotel,mealsBudget,livebudget,staffId FROM taskorder t ,bill b,dept d, WHERE  t.taskid = b.feedbackorder and t.invitedOrgId = d.deptid and c.setTime(VisitorDate)");
+		sql1.append(date);
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setTaskid(rs.getString("taskid"));
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setVisitorNum(rs.getInt("VisitorNum"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				taskOrder.setVisittypeId(rs.getInt("visittypeId"));
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setLeaveDate(rs.getDate("leaveDate"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setMealsBudget(rs.getDouble("mealsBudget"));
+				taskOrder.setLiveBudget(rs.getDouble("livebudget"));
+				taskOrder.setStaff(rs.getString("staffId"));
+				taskmap.put("taskOrder", taskOrder);
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> queryGuestTaskList(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+		sql1.append(
+				"SELECT VisitorOrg,VisitorDate,taskname,VisitorNum,hotel,inviteOrgId,officeId,staffId FROM taskorder t ,bill b,dept d WHERE  t.taskid = b.feedbackorder and t.invitedOrgId = d.deptid and t.officeid = d.deptid andWHERE DATE_FORMAT(t.leaveDate,'%Y%m') =");
+		sql1.append(date);
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				taskOrder.setVisitorNum(rs.getInt("taskname"));				
+				taskOrder.setVisitorNum(rs.getInt("VisitorNum"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setOfficeId(rs.getInt("officeId"));
+				taskOrder.setStaff(rs.getString("staffId"));
+				taskmap.put("taskOrder", taskOrder);
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Map<String, Object> queryCityOfficeReception(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+		
+		sql1.append(
+				"SELECT taskid,VisitorOrg,VisitorNum,VisitorDate,leaveDate,inviteOrgId,hotel,mealsBudget,livebudget,officeId,staffId FROM taskorder t ,bill b,dept d WHERE  t.taskid = b.feedbackorder and t.invitedOrgId = d.deptid and t.officeid = d.deptid and WHERE DATE_FORMAT(t.leaveDate,'%Y%m') =");
+		sql1.append(date);
+		sql1.append("order by date asc");
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setTaskid(rs.getString("taskid"));
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setVisitorNum(rs.getInt("VisitorNum"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setLeaveDate(rs.getDate("leaveDate"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setMealsBudget(rs.getDouble("mealsBudget"));
+				taskOrder.setLiveBudget(rs.getDouble("livebudget"));
+				taskOrder.setOfficeId(rs.getInt("officeId"));
+				taskOrder.setStaff(rs.getString("staffId"));
+				taskmap.put("taskOrder", taskOrder);
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	@Override
+	public Map<String, Object> queryAgencyCost(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+		sql1.append(
+				"SELECT VisitorNum,inviteOrgId,hotel,mealsBudget,livebudget FROM taskorder t ,bill b,dept d WHERE  t.taskid = b.feedbackorder and t.inviteOrgId = d.deptid and t.officeid = d.deptid and DATE_FORMAT(t.leaveDate,'%Y%m') =");
+		sql1.append(date);
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setMealsBudget(rs.getInt("VisitorNum")*rs.getDouble("mealsBudget"));
+				taskOrder.setLiveBudget(rs.getInt("VisitorNum")*rs.getDouble("livebudget"));
+				taskOrder.setOfficeId(rs.getInt("VisitorNum")*rs.getInt("officeId"));
+
+				taskmap.put("taskOrder", taskOrder);
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	@Override
+	public Map<String, Object> queryMeetingGuests(int year, int month, int num, int page) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> taskmap = new HashMap<String, Object>();
+		String sql = null;
+		StringBuffer sql1 = new StringBuffer();
+		String date = null;
+		if (month < 10) {
+			date = year + "0" + month;
+		} else {
+			date = year + "" + month;
+		}
+		//将数据查出循环里++最后放入map集合
+		sql1.append(
+				"SELECT inviteOrgId,VisitorDate,VisitorOrg,hotel,VisitorDate,officeId,staffId FROM taskorder t ,bill b,dept d WHERE  t.taskid = b.feedbackorder and t.invitedOrgId = d.deptid and t.officeid = d.deptid and DATE_FORMAT (t.leaveDate,'%Y%m') =");
+		sql1.append(date);
+		sql1.append(" limit ?,?");
+		sql = sql1.toString();
+	//	System.out.println(sql);
+		try {
+			con = DBUtil.getconnection();
+			pstm = con.prepareStatement(sql);
+			pstm.setInt(1, (page - 1) * num);
+			pstm.setInt(2, num);
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				TaskOrder taskOrder = new TaskOrder();
+				taskOrder.setInviteOrgId(rs.getInt("inviteOrgId"));
+				taskOrder.setVisitorDate(rs.getDate("VisitorDate"));
+				taskOrder.setVisitorOrg(rs.getString("VisitorOrg"));
+				taskOrder.setHotel(rs.getString("hotel"));
+				taskOrder.setOfficeId(rs.getInt("officeId"));
+				taskOrder.setStaff(rs.getString("staffId"));
+				taskmap.put("taskOrder", taskOrder);
+			}
+			//System.out.println(taskmap);
+			int total = taskmap.size();
+			int allpage = total / num + 1;
+			map.put("allpage", allpage);
+			map.put("page", page);
+			map.put("total", total);
+			map.put("num", num);
+			map.put("rows", taskmap);
+			return map;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				DBUtil.closeResource(con, pstm, rs);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+}

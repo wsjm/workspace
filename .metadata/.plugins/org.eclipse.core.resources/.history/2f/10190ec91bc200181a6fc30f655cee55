@@ -1,0 +1,40 @@
+
+package com.keduo.homesDao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import com.keduo.entiry.Homes;
+import com.keduo.entiry.User;
+import com.keduo.util.DbUtil;
+
+
+public  class DelectDao {
+	static int i;
+	static ResultSet rs;
+	public  Homes  updatehomes( int homesId) throws SQLException{
+		Connection con=DbUtil.getConnection();
+		Homes homes=new Homes();
+		//创建连接对象
+		PreparedStatement ps= con.prepareStatement("update homes set homes_ownerId=0 where homesId=?");
+		//占位符的处理
+		
+		ps.setInt(1, homesId);
+		//获取结果集
+		  ps.executeUpdate();
+		//关闭资源
+		
+		  
+		con.close();
+		
+
+		
+return homes;
+	}
+
+}

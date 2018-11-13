@@ -1,0 +1,71 @@
+package com.keduo.controller.homesServlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.keduo.entiry.User;
+import com.keduo.homesService.LoginService;
+
+public class LoginServlet extends HttpServlet {
+	
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//获取页面信息
+		String name= request.getParameter("name");
+		String password= request.getParameter("password");
+
+		//获取数据库中的数据
+		LoginService loginService=new LoginService();
+		ArrayList<User> userList= loginService.login();
+		//System.out.println("------------");
+
+		
+		for (int i = 0; i < userList.size(); i++) {
+			//System.out.println("===================");
+			if (name.equals(userList.get(i).getUsername())) {
+				//System.out.println("登录成功");
+				
+				if (password.equals(userList.get(i).getPassword())) {
+					//System.out.println("登录成功");
+					request.getRequestDispatcher("/s2").forward(request, response);
+					return;
+				}else {
+					System.out.println("密码错误请重新登录");
+					request.getRequestDispatcher("/LoginPage.jsp").forward(request, response);
+					return;
+				}
+			}
+		}
+		response.sendRedirect("LoginPage.jsp");
+		/*System.out.println(userList.get(0).getUsername());
+		if (name.equals(userList.get(0).getUsername())) {
+			System.out.println("登录成功");
+		}else {
+			System.out.println("登录失败");
+		}*/
+
+
+
+
+
+
+
+	}
+
+
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}
